@@ -2,84 +2,58 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>p2020-bigdata</artifactId>
+        <groupId>org.griddynamics</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.griddynamics</groupId>
-    <artifactId>java-spark-kafka</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>spark-jobs</artifactId>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <spark.version>2.4.7</spark.version>
-        <kafka.version>2.4.1</kafka.version>
-        <spark-kafka.version>2.4.7</spark-kafka.version>
-        <scala.version>2.11</scala.version>
-        <jackson.version>2.11.2</jackson.version>
+        <project.spark.scope>compile</project.spark.scope>
     </properties>
+
     <dependencies>
-        <!--  spark  -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_${scala.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>${spark.scope}</scope>
+            <scope>${project.spark.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_${scala.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>${spark.scope}</scope>
+            <scope>${project.spark.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_${scala.version}</artifactId>
-            <version>${spark.version}</version>
-            <scope>${spark.scope}</scope>
+            <scope>${project.spark.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming-kafka-0-10_${scala.version}</artifactId>
-            <version>${spark-kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql-kafka-0-10_${scala.version}</artifactId>
-            <version>${spark-kafka.version}</version>
         </dependency>
-        <!--  kafka  -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_${scala.version}</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-
-        <!--  json  -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 
     <profiles>
         <profile>
-            <id>idea-test</id>
-            <properties>
-                <spark.scope>compile</spark.scope>
-            </properties>
-        </profile>
-
-        <profile>
             <id>uber-jar</id>
             <properties>
-                <spark.scope>provided</spark.scope>
-                <spark.main.class>Example</spark.main.class>
+                <project.spark.scope>provided</project.spark.scope>
             </properties>
             <build>
                 <plugins>
@@ -93,13 +67,6 @@
                                     <goal>single</goal>
                                 </goals>
                                 <configuration>
-                                    <archive>
-                                        <manifest>
-                                            <mainClass>
-                                                ${spark.main.class}
-                                            </mainClass>
-                                        </manifest>
-                                    </archive>
                                     <descriptorRefs>
                                         <descriptorRef>jar-with-dependencies</descriptorRef>
                                     </descriptorRefs>
@@ -113,8 +80,6 @@
                 <dependency>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.3.0</version>
-                    <scope>provided</scope>
                 </dependency>
             </dependencies>
         </profile>
