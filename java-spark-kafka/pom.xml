@@ -3,16 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.example</groupId>
-    <artifactId>java-spark</artifactId>
+
+    <groupId>org.griddynamics</groupId>
+    <artifactId>java-spark-kafka</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spark.version>2.4.7</spark.version>
         <kafka.version>2.4.1</kafka.version>
-        <spark-streaming-kafka.version>2.4.7</spark-streaming-kafka.version>
+        <spark-kafka.version>2.4.7</spark-kafka.version>
         <scala.version>2.11</scala.version>
+        <jackson.version>2.11.2</jackson.version>
     </properties>
     <dependencies>
         <!--  spark  -->
@@ -37,7 +40,12 @@
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming-kafka-0-10_${scala.version}</artifactId>
-            <version>${spark-streaming-kafka.version}</version>
+            <version>${spark-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_${scala.version}</artifactId>
+            <version>${spark-kafka.version}</version>
         </dependency>
         <!--  kafka  -->
         <dependency>
@@ -50,7 +58,15 @@
             <artifactId>kafka_${scala.version}</artifactId>
             <version>${kafka.version}</version>
         </dependency>
+
+        <!--  json  -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
+
     <profiles>
         <profile>
             <id>idea-test</id>
@@ -58,6 +74,7 @@
                 <spark.scope>compile</spark.scope>
             </properties>
         </profile>
+
         <profile>
             <id>uber-jar</id>
             <properties>
