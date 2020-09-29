@@ -1,4 +1,4 @@
-package kafka.pageclickgenerator;
+package models;
 
 public class PageClick {
     private String url;
