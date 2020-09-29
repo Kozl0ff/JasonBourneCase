@@ -1,4 +1,4 @@
-package examples;
+package sparkconsumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -6,20 +6,16 @@ import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.Optional;
-import org.apache.spark.api.java.function.Function3;
 import org.apache.spark.streaming.Durations;
-import org.apache.spark.streaming.State;
-import org.apache.spark.streaming.StateSpec;
 import org.apache.spark.streaming.api.java.*;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
-import scala.Tuple2;
+
 import java.util.*;
 import java.util.regex.Pattern;
 
-public final class JavaDirectKafkaWordCount {
+public final class SparkConsumer {
     private static final Pattern SPACE = Pattern.compile(" ");
     public static void main(String[] args) throws Exception {
         SparkConf sparkConf = new SparkConf().setAppName("JavaDirectKafkaWordCount");
@@ -46,30 +42,28 @@ public final class JavaDirectKafkaWordCount {
 //        List<Tuple2<String, Integer>> tuples = new ArrayList<>();
         JavaPairRDD<String, Integer> initialRDD = javaStreamingContext.sparkContext()
                 .parallelizePairs(new ArrayList<>());
-        Function3<String, Optional<Integer>, State<Integer>, Tuple2<String, Integer>> mappingFunc =
-                (word, one, state) -> {
-                    int sum = one.orElse(0) + (state.exists() ? state.get() : 0);
-                    Tuple2<String, Integer> output = new Tuple2<>(word, sum);
-                    state.update(sum);
-                    return output;
-                };
+//        Function3<String, Optional<Integer>, State<Integer>, Tuple2<String, Integer>> mappingFunc =
+//                (word, one, state) -> {
+//                    int sum = one.orElse(0) + (state.exists() ? state.get() : 0);
+//                    Tuple2<String, Integer> output = new Tuple2<>(word, sum);
+//                    state.update(sum);
+//                    return output;
+//                };
         // Get the lines, split them into words, count the words and print
         JavaDStream<String> lines = messages.map(ConsumerRecord::value);
-        JavaDStream<String> words = lines.flatMap(x -> Arrays.asList(SPACE.split(x)).iterator());
-        JavaPairDStream<String, Integer> wordCounts = words.mapToPair(s -> new Tuple2<>(s, 1));
-        JavaMapWithStateDStream<String, Integer, Integer, Tuple2<String, Integer>> stateDstream =
-                wordCounts.mapWithState(StateSpec.function(mappingFunc).initialState(initialRDD));
-        //stateDstream.print();
-        //stateDstream.print(2);
-        //stateDstream.dstream().saveAsTextFiles("/user/root","json");
-        stateDstream.foreachRDD(rdd ->{
-                rdd.repartition(1);
+//        JavaDStream<String> words = lines.flatMap(x -> Arrays.asList(SPACE.split(x)).iterator());
+//        JavaPairDStream<String, Integer> wordCounts = words.mapToPair(s -> new Tuple2<>(s, 1));
+//        JavaMapWithStateDStream<String, Integer, Integer, Tuple2<String, Integer>> stateDstream =
+//                wordCounts.mapWithState(StateSpec.function(mappingFunc).initialState(initialRDD));
+//        //stateDstream.dstream().saveAsTextFiles("/user/root","json");
+
+        lines.foreachRDD(rdd ->{
+            rdd.repartition(1);
             if (!rdd.isEmpty())
-                rdd.saveAsObjectFile("/user/root/" + System.currentTimeMillis());
+                rdd.saveAsTextFile("/user/root/" + System.currentTimeMillis());
             else
                 System.out.println("Is empty");
         });
-        // Start the computation
         javaStreamingContext.start();
         javaStreamingContext.awaitTermination();
     }
