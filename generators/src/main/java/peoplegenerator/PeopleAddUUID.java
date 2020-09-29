@@ -16,7 +16,7 @@ public class PeopleAddUUID {
         Encoder<Person> personEncoder = Encoders.bean(Person.class);
         Dataset<Person> personDataset = sparkSession.read()
             .option("header", "true")
-            .csv("src/main/resources/people.csv")
+            .csv("generators/src/main/resources/people.csv")
             .as(personEncoder);
 
         Dataset<Person> personDatasetWithUUID = personDataset.map(
@@ -30,6 +30,6 @@ public class PeopleAddUUID {
         personDatasetWithUUID.write()
             .mode(SaveMode.Overwrite)
             .option("header", "true")
-            .csv("src/main/resources/peopleWithUUID.csv");
+            .csv("generators/src/main/resources/peopleWithUUID.csv");
     }
 }
