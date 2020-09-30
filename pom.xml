@@ -27,6 +27,7 @@
         <scala.version>2.11</scala.version>
         <jackson.version>2.11.2</jackson.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <jackson-databind-version>2.8.8</jackson-databind-version>
     </properties>
 
     <dependencyManagement>
