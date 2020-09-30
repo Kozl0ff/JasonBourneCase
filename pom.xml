@@ -11,9 +11,14 @@
     <modules>
         <module>generators</module>
         <module>spark-jobs</module>
+        <module>models</module>
     </modules>
 
     <properties>
+        <p2020-bigdata.models.verison>1.0-SNAPSHOT</p2020-bigdata.models.verison>
+        <p2020-bigdata.generators.verison>1.0-SNAPSHOT</p2020-bigdata.generators.verison>
+        <p2020-bigdata.spark-jobs.verison>1.0-SNAPSHOT</p2020-bigdata.spark-jobs.verison>
+
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spark.version>2.4.7</spark.version>
@@ -84,6 +89,13 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!--  our project  -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>models</artifactId>
+                <version>${p2020-bigdata.models.verison}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

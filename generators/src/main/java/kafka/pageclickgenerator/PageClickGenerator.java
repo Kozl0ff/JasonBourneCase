@@ -1,5 +1,7 @@
 package kafka.pageclickgenerator;
 
+import models.PageClick;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
