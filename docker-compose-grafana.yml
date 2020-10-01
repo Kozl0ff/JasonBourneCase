@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=octopus
+      - MYSQL_DATABASE=kot
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user
+    volumes:
+      - ./scripts_db/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  grafana:
+    image: grafana/grafana:5.1.0
+    ports:
+      - 3000:3000
