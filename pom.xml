@@ -27,6 +27,7 @@
         <scala.version>2.11</scala.version>
         <jackson.version>2.11.2</jackson.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <jackson-scala>2.8.8</jackson-scala>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +82,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-scala_${scala.version}</artifactId>
+                <version>${jackson-scala}</version>
             </dependency>
 
             <!--  maven -->
