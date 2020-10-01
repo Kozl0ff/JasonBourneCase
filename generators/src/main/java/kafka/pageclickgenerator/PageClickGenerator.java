@@ -1,10 +1,10 @@
 package kafka.pageclickgenerator;
 
+import kafka.utils.GeneratorHelpers;
 import models.PageClick;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class PageClickGenerator {
@@ -39,7 +39,7 @@ public class PageClickGenerator {
             pageClick.setUrl(refererUrls.get(rand - length / 2));
         }
         pageClick.setRefererUrl(refererUrls.get(rand / 2));
-        pageClick.setTimestamp(generateTimestamp());
+        pageClick.setTimestamp(GeneratorHelpers.generateTimestamp());
         return pageClick;
     }
 
@@ -48,13 +48,5 @@ public class PageClickGenerator {
             random.nextInt(256) + "." +
             random.nextInt(256) + "." +
             random.nextInt(256);
-    }
-
-    private String generateTimestamp() {
-        int year = 14 + random.nextInt(5);
-        long offset = Timestamp.valueOf("20" + year + "-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("20" + (year + 1) + "-01-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        return new Timestamp(offset + (long)(Math.random() * diff)).toString();
     }
 }
