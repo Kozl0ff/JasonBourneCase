@@ -1,11 +1,11 @@
 FROM ubuntu:bionic
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre
-ENV HADOOP_HOME /opt/hadoop
-ENV HADOOP_CONF_DIR /opt/hadoop/etc/hadoop
-ENV SPARK_HOME /opt/spark
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+ENV SPARK_HOME=/opt/spark
 ENV PATH="${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:${SPARK_HOME}/bin:${SPARK_HOME}/sbin:${PATH}"
-ENV HADOOP_VERSION 2.7.0
+ENV HADOOP_VERSION=2.7.0
 
 RUN apt-get update && \
     apt-get install -y wget nano openjdk-8-jdk ssh openssh-server kafkacat
@@ -37,7 +37,5 @@ EXPOSE 7077
 EXPOSE 4040
 EXPOSE 8020
 EXPOSE 22
-
-RUN mkdir lab
 
 ENTRYPOINT ["/bin/bash", "bootstrap.sh"]
