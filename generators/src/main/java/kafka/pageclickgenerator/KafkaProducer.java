@@ -22,10 +22,10 @@ public class KafkaProducer {
         return new org.apache.kafka.clients.producer.KafkaProducer<>(props);
     }
 
-    static void runProducer(String bootstrapServer, String topic, String urlsPath) throws Exception {
+    static void runProducer(String bootstrapServer, String topic, String urlsPath, String cookieEmailMappingsPath) throws Exception {
         final Producer<Long, String> producer = createProducer(bootstrapServer);
         long time = System.currentTimeMillis();
-        PageClickGenerator pageClickGenerator = new PageClickGenerator(urlsPath);
+        PageClickGenerator pageClickGenerator = new PageClickGenerator(urlsPath, cookieEmailMappingsPath);
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
