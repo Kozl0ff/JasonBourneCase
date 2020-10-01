@@ -5,7 +5,7 @@ services:
     depends_on:
       - node-slave1
       - node-slave2
-    image: micro-cluster-kafkacat:latest
+    image: cluster-base:latest
     container_name: node-master
     hostname: node-master
     tty: true
@@ -15,7 +15,6 @@ services:
       - "50030:50030"
       - "8080:8080"
       - "8042:8042"
-      - "8888:8888"
       - "4040:4040"
       - "8032:8032"
     networks:
@@ -25,7 +24,7 @@ services:
     volumes:
       - './spark-jobs/target:/spark_volume'
   node-slave1:
-    image: micro-cluster-kafkacat:latest
+    image: cluster-base:latest
     container_name: node-slave1
     hostname: node-slave1
     tty: true
@@ -36,7 +35,7 @@ services:
         aliases: 
           - node-slave1
   node-slave2:
-    image: micro-cluster-kafkacat:latest
+    image: cluster-base:latest
     container_name: node-slave2
     hostname: node-slave2
     tty: true
