@@ -25,6 +25,7 @@ services:
       - './spark-jobs:/spark_volume/jars'
       - './spark-jobs/src/main/resources:/spark_volume/resources'
       - './scripts/spark:/scripts'
+      - './generators/src/main/resources:/spark_volume/resources_generators'
   node-slave1:
     image: cluster-base:latest
     container_name: node-slave1

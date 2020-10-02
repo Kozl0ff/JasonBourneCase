@@ -1,2 +1,2 @@
 #!/bin/bash
-/scripts/putFilesFromLocalToHDFS.sh peopleWithUUID.csv userCookieEmailMappings.csv
+/scripts/putFilesGeneratorsFromLocalToHDFS.sh peopleWithUUID.csv userCookieEmailMappings.csv

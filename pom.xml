@@ -32,7 +32,6 @@
         <commons-net.version>3.6</commons-net.version>
         <junit-jupiter-api.version>5.7.0</junit-jupiter-api.version>
         <mysql.version>8.0.21</mysql.version>
-        <mysql.version>8.0.21</mysql.version>
     </properties>
 
     <dependencyManagement>

@@ -1,6 +1,8 @@
 package models;
 
-public class PageClick {
+import java.io.Serializable;
+
+public class PageClick implements Serializable {
     private String url;
     private String refererUrl;
     private String cookie;
