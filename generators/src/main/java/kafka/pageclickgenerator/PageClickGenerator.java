@@ -1,23 +1,23 @@
 package kafka.pageclickgenerator;
 
+import com.opencsv.exceptions.CsvValidationException;
 import kafka.utils.GeneratorHelpers;
 import models.PageClick;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class PageClickGenerator {
-    private List<String> urls;
-    private List<String> refererUrls;
+    private List<String> urls = new ArrayList<>();
+    private List<String> cookies;
+    private List<String> refererUrls = new ArrayList<>();
     private Integer length = 0;
-    private Random random;
+    private Random random = new Random();
 
-    public PageClickGenerator(String urlsPath) throws FileNotFoundException {
-        urls = new ArrayList<>();
-        refererUrls = new ArrayList<>();
-        random = new Random();
-
+    public PageClickGenerator(String urlsPath, String cookieEmailMappingsPath) throws IOException, CsvValidationException {
+        // Read URls from the file so that we can randomly use them later
         File file = new File(urlsPath);
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
@@ -26,12 +26,15 @@ public class PageClickGenerator {
             refererUrls.add(split[1]);
             length += 2;
         }
+
+        // Read cookies from CookieEmailMappings file
+        cookies = GeneratorHelpers.readColumnFromCsvFile(cookieEmailMappingsPath, 0);
     }
 
     public PageClick getNext() {
         int rand = random.nextInt(length);
         PageClick pageClick = new PageClick();
-        pageClick.setCookie(UUID.randomUUID().toString());
+        pageClick.setCookie(getRandomCookieFromMappings());
         pageClick.setIp(generateIP());
         if (rand < length / 2) {
             pageClick.setUrl(urls.get(rand));
@@ -43,10 +46,14 @@ public class PageClickGenerator {
         return pageClick;
     }
 
+    private String getRandomCookieFromMappings() {
+        return cookies.get(random.nextInt(cookies.size()));
+    }
+
     private String generateIP() {
         return random.nextInt(256) + "." +
-            random.nextInt(256) + "." +
-            random.nextInt(256) + "." +
-            random.nextInt(256);
+                random.nextInt(256) + "." +
+                random.nextInt(256) + "." +
+                random.nextInt(256);
     }
 }
