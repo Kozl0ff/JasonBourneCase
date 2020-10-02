@@ -22,7 +22,7 @@ public final class SparkConsumer {
 
         String bootstrapServer;
         String topic;
-        if (args.length == 2) {
+        if (args.length >= 2) {
              bootstrapServer = args[0];
              topic = args[1];
         } else {
@@ -40,13 +40,14 @@ public final class SparkConsumer {
                 ConsumerStrategies.Subscribe(topicsSet, kafkaParams));
         JavaDStream<String> lines = messages.map(ConsumerRecord::value);
 
-        lines.foreachRDD(rdd ->{
-            rdd.repartition(1);
-            if (!rdd.isEmpty())
-                rdd.saveAsTextFile("/user/root/" + System.currentTimeMillis());
-            else
-                System.out.println("Is empty");
-        });
+        String prefix = "/user/root/page-clicks/stream";
+        String suffix = "";
+        if (args.length >= 4) {
+                prefix = args[2];
+                suffix = args[3];
+        }
+        lines.dstream().saveAsTextFiles(prefix, suffix);
+
         javaStreamingContext.start();
         javaStreamingContext.awaitTermination();
     }

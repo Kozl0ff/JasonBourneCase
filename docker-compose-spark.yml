@@ -22,7 +22,9 @@ services:
         aliases: 
           - node-master
     volumes:
-      - './spark-jobs/target:/spark_volume'
+      - './spark-jobs:/spark_volume/jars'
+      - './generators/src/main/resources:/spark_volume/resources'
+      - './scripts/spark:/spark_volume/scripts'
   node-slave1:
     image: cluster-base:latest
     container_name: node-slave1
@@ -51,3 +53,6 @@ networks:
     driver: bridge
     ipam:
       driver: default
+
+volumes:
+  jars:
