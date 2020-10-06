@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=octopus
+      - MYSQL_DATABASE=${MYSQL_DATABASE:?err}
+      - MYSQL_USER=${MYSQL_USER:?err}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:?err}
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    networks:
+      mysql-grafana-network:
+        aliases:
+          - mysql
+  grafana:
+    image: grafana/grafana:7.1.2
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+    links:
+      - database
+    volumes:
+      - ./docker/grafana/datasource:/etc/grafana/provisioning/datasources/
+      - ./docker/grafana/dashboard:/etc/grafana/provisioning/dashboards/
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - GRAFANA_MYSQL_PASSWORD=${GRAFANA_MYSQL_PASSWORD}
+      - GRAFANA_MYSQL_USER=${GRAFANA_MYSQL_USER}
+    networks:
+      mysql-grafana-network:
+        aliases:
+          - grafana
+networks:
+  mysql-grafana-network:
+    driver: bridge
+    ipam:
+      driver: default
+
