@@ -299,3 +299,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Spark jobs resources
+/spark-jobs/src/main/resources/*

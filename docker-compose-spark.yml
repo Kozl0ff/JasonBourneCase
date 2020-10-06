@@ -22,7 +22,9 @@ services:
         aliases: 
           - node-master
     volumes:
-      - './spark-jobs/target:/spark_volume'
+      - './spark-jobs:/spark_volume/jars'
+      - './spark-jobs/src/main/resources:/spark_volume/resources'
+      - './scripts/spark:/scripts'
   node-slave1:
     image: cluster-base:latest
     container_name: node-slave1
