@@ -31,6 +31,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - GRAFANA_MYSQL_PASSWORD=${GRAFANA_MYSQL_PASSWORD}
       - GRAFANA_MYSQL_USER=${GRAFANA_MYSQL_USER}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel
     networks:
       mysql-grafana-network:
         aliases:
