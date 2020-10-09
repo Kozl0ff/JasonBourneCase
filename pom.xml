@@ -29,6 +29,7 @@
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <jackson-scala>2.8.8</jackson-scala>
         <opencsv.version>5.2</opencsv.version>
+        <mysql.version>8.0.21</mysql.version>
     </properties>
 
     <dependencyManagement>
@@ -103,6 +104,13 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!--  mysql  -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
 
             <!--  our project  -->

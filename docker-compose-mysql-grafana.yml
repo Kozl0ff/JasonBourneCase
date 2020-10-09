@@ -26,6 +26,7 @@ services:
     volumes:
       - ./docker/grafana/datasource:/etc/grafana/provisioning/datasources/
       - ./docker/grafana/dashboard:/etc/grafana/provisioning/dashboards/
+      - ./docker/grafana/dashboard/page-clicks:/etc/grafana/provisioning/dashboards/page-clicks
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - MYSQL_DATABASE=${MYSQL_DATABASE}
