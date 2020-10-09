@@ -59,6 +59,18 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -94,6 +106,13 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                 </dependency>
             </dependencies>
+        </profile>
+
+        <profile>
+            <id>idea-test</id>
+            <properties>
+                <project.spark.scope>compile</project.spark.scope>
+            </properties>
         </profile>
     </profiles>
 </project>

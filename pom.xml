@@ -29,6 +29,9 @@
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <jackson-scala>2.8.8</jackson-scala>
         <opencsv.version>5.2</opencsv.version>
+        <commons-net.version>3.6</commons-net.version>
+        <junit-jupiter-api.version>5.7.0</junit-jupiter-api.version>
+        <mysql.version>8.0.21</mysql.version>
         <mysql.version>8.0.21</mysql.version>
     </properties>
 
@@ -111,6 +114,19 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+
+            <!--  tests  -->
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>${commons-net.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter-api.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!--  our project  -->
