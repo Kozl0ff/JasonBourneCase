@@ -22,7 +22,7 @@ public final class SparkConsumer {
 
         String bootstrapServer;
         String topic;
-        if (args.length == 2) {
+        if (args.length >= 2) {
              bootstrapServer = args[0];
              topic = args[1];
         } else {
