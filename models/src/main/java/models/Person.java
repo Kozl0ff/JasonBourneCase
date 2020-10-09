@@ -1,4 +1,4 @@
-package peoplegenerator;
+package models;
 
 import java.io.Serializable;
 

@@ -1,11 +1,10 @@
 package peoplegenerator;
 
-import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import kafka.utils.GeneratorHelpers;
 
-import java.io.*;
-import java.util.LinkedList;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -17,10 +16,12 @@ public class CookieEmailGenerator {
         List<String> emails = GeneratorHelpers.readColumnFromCsvFile(pathToUsers, 4);
 
         try (FileWriter writer = new FileWriter(pathToCookieEmail, false)) {
-            for (int i = 0; i <= n; i++) {
+            writer.write("cookie,email,timestamp" + System.lineSeparator());
+            writer.flush();
+            for (int i = 0; i < n; i++) {
                 String data = UUID.randomUUID().toString() + "," + emails.get(random.nextInt(emails.size())) + ","
                         + GeneratorHelpers.generateTimestamp();
-                writer.write(data + "\n");
+                writer.write(data + System.lineSeparator());
                 writer.flush();
             }
         } catch (IOException e) {
