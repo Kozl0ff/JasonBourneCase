@@ -1,5 +1,6 @@
 package peoplegenerator;
 
+import models.Person;
 import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.SaveMode;
